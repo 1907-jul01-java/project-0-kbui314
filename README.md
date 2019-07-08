@@ -1,6 +1,6 @@
 # Console Bank Application
 ## Kenny Bui
-This is a console Bank Application where the application models real-world behaviors of a banking system.
+This is a console Bank Application where the application model real-world behaviors of a banking system.
 # User Stories
 - As a user, I am able to register for an account with a username and password.
 - As a user, I am able sign in to my account.
