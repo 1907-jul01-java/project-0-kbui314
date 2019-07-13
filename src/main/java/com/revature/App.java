@@ -2,13 +2,15 @@ package com.revature;
 
 
 /**
- * Hello world!
+ * Hello world! 
  *
  */
 public class App {
     public static void main(String[] args) {
-        MainMenu mainMenu = new MainMenu();
+    	ConnectionUtil connectionUtil = new ConnectionUtil();
+        MainMenu mainMenu = new MainMenu(connectionUtil.getConnection()); 
         mainMenu.display();
-        
+        connectionUtil.close();
+    	
     }
 }
