@@ -8,6 +8,11 @@ public class Account {
 	public Account() {
 		
 	}
+	
+	public Account(int accountNumber, int balance) {
+		this.accountNumber = accountNumber;
+		this.balance = balance;
+	}
 
 	public Account(String name, int accountNumber, int balance) {
 		super();

@@ -9,6 +9,7 @@ import java.util.Scanner;
 public class MainMenu {
 	Connection connection;
 	public void display() {
+		
 		int input = 0;
 		while(input != 3) {
 			menu();
@@ -17,11 +18,11 @@ public class MainMenu {
 				input = sc.nextInt();
 				switch(input) {
 				case 1:
-					System.out.println("log in");
+					System.out.println("Logging In...");
 					login();
 					break;
 				case 2:
-					System.out.println("sign up");
+					System.out.println("Sign Up");
 					signUp();
 					break;
 				case 3:
@@ -39,7 +40,10 @@ public class MainMenu {
 		}
 	}
 	public void menu() {
-		System.out.println("1.Log In\n2. Sign Up\n3. Exit");
+		System.out.println();
+		System.out.println("MAIN MENU");
+		System.out.println("---------");
+		System.out.println("1. Log In\n2. Sign Up\n3. Exit");
 	}
 	
 	public MainMenu(Connection connection) {
@@ -80,7 +84,7 @@ public class MainMenu {
 			
 			System.out.println("Provide a password.");
 			String password = in.nextLine();
-			boolean bool = authenticateUser(username, password);
+			boolean bool = authenticateUser(username,password);
 			if(bool) {
 				AccountMenu accountMenu = new AccountMenu(username, connection);
 				accountMenu.display();
@@ -138,7 +142,7 @@ public class MainMenu {
 	public Boolean authenticateUser(String username, String password) {
 		int i = 0;
 		try {
-			PreparedStatement pStatement = connection.prepareStatement("select username,password from users where username=? and password=?");
+			PreparedStatement pStatement = connection.prepareStatement("select username,password,category from users where username=? and password=?");
 			pStatement.setString(1, username);
 			pStatement.setString(2, password);
 			ResultSet resultSet = pStatement.executeQuery();
@@ -156,7 +160,6 @@ public class MainMenu {
 			e.getMessage();
 		}
 		System.out.println("Either username and/or password is invalid. Please try again.");
-		System.out.println("false");
 		return false;
 	}
 }
