@@ -70,7 +70,8 @@ public class MainMenu {
 			}
 			
 		} catch (Exception e) {
-			
+			System.out.println("Invalid input. Please try again.");
+			display();
 		}
 	}
 	

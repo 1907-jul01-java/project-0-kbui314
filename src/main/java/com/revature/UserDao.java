@@ -98,28 +98,17 @@ public class UserDao implements Dao<User> {
 		}
 	}
 	
-	public Account getAccount(int accountNumber) {
-		Account account = new Account();
+	public ResultSet getAccount(int accountNumber) {
+		ResultSet resultSet = null;
 		try {
-			System.out.println("Hello");
-			PreparedStatement pStatement = connection.prepareStatement("Select number,balance from account where account=?");
-			System.out.println("sir");
+			PreparedStatement pStatement = connection.prepareStatement("Select number,balance from account where number=?");
 			pStatement.setInt(1, accountNumber);
-			ResultSet resultSet = pStatement.executeQuery();
-			System.out.println("iam");
-			while(resultSet.next()) {
-				account = new Account();
-				int num = resultSet.getInt("number");
-				account.setAccountNumber(num);
-				System.out.println(num);
-				int bal = resultSet.getInt("balance");
-				account.setBalance(bal);
-				System.out.println(bal);
-			}
+			resultSet = pStatement.executeQuery();
+			return resultSet;
 		} catch(SQLException e) {
 			
 		}
-		return account;
+		return resultSet;
 	}
 	
 	public void apply(String username) {
@@ -168,23 +157,36 @@ public class UserDao implements Dao<User> {
 					+ "accountusers.accountnumber=account.number "+
 					"group by users.username,accountusers.accountnumber,account.balance");
 			ResultSet resultSet = pStatement.executeQuery();
+			int count = 0;
 			while(resultSet.next()) {
+				count++;
 				String username = resultSet.getString(1);
 				int account = resultSet.getInt(2);
 				int balance = resultSet.getInt(3);
 				System.out.println("Username: "+username+"  Account Number: "+account+"  Balance: "+balance);
 			}
+			if(count == 0) {
+				System.out.println("There are no open accounts.");
+			}
 		} catch(SQLException e) {
 			
 		}
-		EmployeeMenu eMenu = new EmployeeMenu(connection);
-		eMenu.display();
 	}
 	
 	public void deleteApplication(String username) {
 		try {
-			PreparedStatement pStatement = connection.prepareStatement("Delete from applications where username=?");
+			PreparedStatement pStatement = connection.prepareStatement("Delete from application where username=?");
 			pStatement.setString(1, username);
+			pStatement.executeQuery();
+		}catch(SQLException e) {
+			e.getMessage();
+		}
+	}
+	
+	public void deleteJointApplication(int id) {
+		try {
+			PreparedStatement pStatement = connection.prepareStatement("Delete from joint where id=?");
+			pStatement.setInt(1, id);
 			pStatement.executeQuery();
 		}catch(SQLException e) {
 			e.getMessage();
@@ -213,6 +215,20 @@ public class UserDao implements Dao<User> {
 			e.getMessage();
 		}
 		return resultSet;
+	}
+	
+	public void deleteAccount(int accountNumber) {
+		try {
+			PreparedStatement pStatement = connection.prepareStatement("Delete from accountusers where accountusers.accountnumber=?");
+			pStatement.setInt(1, accountNumber);
+			pStatement.executeUpdate();
+			pStatement = connection.prepareStatement("Delete from account where account.number=?");
+			pStatement.setInt(1, accountNumber);
+			pStatement.executeUpdate();
+		}catch(SQLException e) {
+			e.getMessage();
+		}
+		
 	}
 	
 }

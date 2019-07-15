@@ -25,9 +25,8 @@ public class EmployeeMenu {
 				input = in.nextInt();
 				switch(input) {
 				case 1:
-					System.out.println("View All Customer Account Information");
-					UserDao userDao = new UserDao(connection);
-					userDao.getAllAccounts();
+					System.out.println("Viewing Customer's Account Information");
+					displayAccountInformation();
 					break;
 				case 2:
 					System.out.println("Viewing Regular Applications");
@@ -43,7 +42,8 @@ public class EmployeeMenu {
 					break;
 				}
 			}catch(Exception e) {
-				
+				System.out.println("This is not a valid input. Please try again.");
+				employeeDisplay();
 			}
 		}
 	}
@@ -52,12 +52,17 @@ public class EmployeeMenu {
 		System.out.println();
 		System.out.println("EMPLOYEE MENU");
 		System.out.println("-------------");
-		System.out.println("1. View Customer Accounts\n2. View Applications\n3. View Joint Applications\n4. Log Out");
+		System.out.println("1. View Customer's Account Information\n2. View Applications\n3. View Joint Applications\n4. Log Out");
 	}
 	
+	public void displayAccountInformation() {
+		UserDao userDao = new UserDao(connection);
+		userDao.getAllAccounts();
+		display();
+	}
 	public void reviewApplications() {
 		try {
-			
+			UserDao userDao = new UserDao(connection);
 			PreparedStatement pStatement = connection.prepareStatement("Select username from application");
 			ResultSet resultSet = pStatement.executeQuery();
 			while(resultSet.next()) {
@@ -76,7 +81,7 @@ public class EmployeeMenu {
 						count++;
 						Random random = new Random();
 						int randomAccount = 100000 + random.nextInt(900000);
-						UserDao userDao = new UserDao(connection);
+						userDao = new UserDao(connection);
 						userDao.insertAccountUser(username, randomAccount);
 						userDao.insertAccount(randomAccount);
 						userDao.deleteApplication(username);
@@ -86,12 +91,16 @@ public class EmployeeMenu {
 				if(count == 0) {
 					System.out.println("Username input was invalid. Please try again.");
 				}
-			} else {
+			} else if(input.equals("n")) {
+				userDao.deleteApplication(username);
 				System.out.println("Application for an account for "+username+" has been denied.");
+			} else {
+				System.out.println("Accept/Deny input is invalid. Please try again.");
 			}
 			
-		}catch(SQLException e) {
-			
+		}catch(Exception e) {
+			System.out.println("Invalid input. Please try again.");
+			display();
 		}
 		display();
 	}
@@ -121,21 +130,37 @@ public class EmployeeMenu {
 			} catch (Exception e) {
 				idInput = 0;
 			}
+			System.out.println("Do you accept or deny joint application?(y/n)");
+			String adInput = in.nextLine();
 			resultSet = userDao.getJointApplications();
 			count = 0;
 			while(resultSet.next()) {
 				if(resultSet.getInt("id") == idInput) {
 					count++;
-					String addUser = resultSet.getString("adduser");
-					int accNumber = resultSet.getInt("account");
-					userDao.insertAccountUser(addUser, accNumber);
-					System.out.println("Added user "+addUser+" to account "+accNumber);
+					if(adInput.equals("y")) {
+						String addUser = resultSet.getString("adduser");
+						int accNumber = resultSet.getInt("account");
+						userDao.insertAccountUser(addUser, accNumber);
+						System.out.println("Added user "+addUser+" to account "+accNumber);
+						userDao.deleteJointApplication(idInput);
+					} else if(adInput.equals("n")) {
+						userDao.deleteJointApplication(idInput);
+						System.out.println("Application for an joint account for "+resultSet.getString("username")+
+								" and "+resultSet.getString("adduser")+" has been denied.");
+					} else {
+						System.out.println("Accept/Deny input is invalid. Please try again.");
+					}
+					
 					break;
 				}
 			}
+			if(count == 0) {
+				System.out.println("Input for ID is invalid. Please try again.");
+			}
 			
-		} catch (SQLException e) {
-			e.getMessage();
+		} catch (Exception e) {
+			System.out.println("Invalid input. Please try again.");
+			display();
 		}
 		display();
 	}
