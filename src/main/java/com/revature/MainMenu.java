@@ -59,6 +59,10 @@ public class MainMenu {
 			String username = in.nextLine();
 			System.out.println("Provide a password.");
 			String password = in.nextLine();
+			if(password.equals("")) {
+				System.out.println("Cannot have an empty password. Please try again.");
+				display();
+			}
 			boolean bool = hasUser(username, password);
 			
 			
@@ -66,7 +70,6 @@ public class MainMenu {
 			
 			if(!bool) {
 				userDao.insert(new User(username,password,"customer"));
-				System.out.println(userDao.getAll());
 			}
 			
 		} catch (Exception e) {

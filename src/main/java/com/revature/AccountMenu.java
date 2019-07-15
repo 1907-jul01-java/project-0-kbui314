@@ -97,7 +97,6 @@ public class AccountMenu {
 			while (resultSet.next()) {
 				account = new Account();
 				account.setName(resultSet.getString("person"));
-				System.out.println(resultSet.getString("person"));
 				account.setAccountNumber(resultSet.getInt("accnumber"));
 				account.setBalance(resultSet.getInt("amount"));
 				accounts.add(account);
@@ -153,7 +152,6 @@ public class AccountMenu {
 			while (resultSet.next()) {
 				account = new Account();
 				account.setName(resultSet.getString("person"));
-				System.out.println(resultSet.getString("person"));
 				account.setAccountNumber(resultSet.getInt("accnumber"));
 				account.setBalance(resultSet.getInt("amount"));
 				accounts.add(account);
@@ -211,7 +209,6 @@ public class AccountMenu {
 			while (resultSet.next()) {
 				account = new Account();
 				account.setName(resultSet.getString("person"));
-				System.out.println(resultSet.getString("person"));
 				account.setAccountNumber(resultSet.getInt("accnumber"));
 				account.setBalance(resultSet.getInt("amounts"));
 				accounts.add(account);

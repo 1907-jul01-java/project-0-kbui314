@@ -230,5 +230,13 @@ public class UserDao implements Dao<User> {
 		}
 		
 	}
+	/**
+	 * To be implemented.
+	 * Shows information about each transaction.
+	 * @param transaction
+	 */
+	public void insertTransaction(Transaction transaction) {
+		
+	}
 	
 }
