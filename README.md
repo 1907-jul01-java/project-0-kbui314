@@ -21,4 +21,27 @@ This is a console Bank Application where the application models real-world behav
 - As an administrator, I am able to approve or deny open applications for joint accounts.
 
 # Instructions
-Insert environment, build, and execution documentation here.
+
+#### Build Postgres moviedb
+Change directory into /db and run:
+```
+docker build -t moviedb.
+```
+Then run a container:
+```
+docker run -d -p 5432:5432 moviedb
+```
+
+#### Compile, Package, and Execute with Maven
+To compile and execute, run:
+```
+mvn compile
+mvn exec:java
+```
+To package an executable jar and execute, run:
+```
+mvn clean package
+java -jar target/project0.jar
+```
+
+
