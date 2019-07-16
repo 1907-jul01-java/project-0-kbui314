@@ -1,5 +1,10 @@
 package com.revature;
 
+/**
+ * 
+ * A class that creates a User object.
+ *
+ */
 public class User {
 	private String username;
 	private String password;

@@ -1,5 +1,10 @@
 package com.revature;
 
+/**
+ * 
+ * A class that creates an Account object.
+ *
+ */
 public class Account {
 	private String name;
 	private int accountNumber;

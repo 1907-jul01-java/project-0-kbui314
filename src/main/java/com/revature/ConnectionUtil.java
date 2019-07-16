@@ -11,6 +11,12 @@ public class ConnectionUtil {
 	private Connection connection;
     private String url, user, password;
 
+    /**
+     * A method that connects to database by reading a file
+     * with the specified url,username, and password and the
+     * DriverManager gets the connection to the database
+     * based on the url, user, and password
+     */
     public ConnectionUtil() {
         try {
             Properties properties = new Properties();
@@ -20,7 +26,6 @@ public class ConnectionUtil {
             this.password = properties.getProperty("password");
 
             this.connection = DriverManager.getConnection(this.url, this.user, this.password);
-            System.out.println("Connected");
         } catch (SQLException e) {
             e.getMessage();
         } catch (IOException e) {

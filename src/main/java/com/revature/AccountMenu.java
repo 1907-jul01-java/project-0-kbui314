@@ -32,27 +32,32 @@ public class AccountMenu {
 					input = accScanner.nextInt();
 					switch (input) {
 					case 1:
-						System.out.println("1. Deposit");
+						System.out.println("1. Depositing");
+						System.out.println();
 						deposit();
 						break;
 					case 2:
-						System.out.println("2. Withdraw");
+						System.out.println("2. Withdrawing");
+						System.out.println();
 						withdraw();
 						break;
 					case 3:
-						System.out.println("3. Transfer");
+						System.out.println("3. Transferring");
+						System.out.println();
 						transfer();
 						break;
 					case 4:
-						System.out.println("4. Apply for Regular Account");
+						System.out.println("4. Applying for Regular Account");
+						System.out.println();
 						application();
 						break;
 					case 5:
-						System.out.println("5. Apply for Joint Account");
+						System.out.println("5. Applying for Joint Account");
+						System.out.println();
 						joint();
 						break;
 					case 6:
-						System.out.println("logging out");
+						System.out.println("Logging out");
 						MainMenu menu = new MainMenu(connection);
 						menu.display();
 						break;
@@ -69,6 +74,9 @@ public class AccountMenu {
 		return;
 	}
 
+	/**
+	 * Shows the account menu of customers.
+	 */
 	public void accountMenu() {
 		System.out.println();
 		System.out.println("ACCOUNT MENU");
@@ -83,6 +91,9 @@ public class AccountMenu {
 		this.connection = connection;
 	}
 
+	/**
+	 * A method that deposits into the user's account.
+	 */
 	public void deposit() {
 		Account account = new Account();
 		List<Account> accounts = new ArrayList<>();
@@ -138,6 +149,9 @@ public class AccountMenu {
 		}
 	}
 
+	/**
+	 * A method that withdraws from the user's account.
+	 */
 	public void withdraw() {
 		Account account = new Account();
 		List<Account> accounts = new ArrayList<>();
@@ -196,6 +210,9 @@ public class AccountMenu {
 		}
 	}
 
+	/**
+	 * A method that transfers from the user's account to another account.
+	 */
 	public void transfer() {
 		Account account = new Account();
 		List<Account> accounts = new ArrayList<>();
@@ -274,6 +291,9 @@ public class AccountMenu {
 		}
 	}
 
+	/**
+	 * A method that sends an application to open an account.
+	 */
 	public void application() {
 		UserDao userDao = new UserDao(connection);
 		userDao.apply(userName);
@@ -281,6 +301,9 @@ public class AccountMenu {
 		display();
 	}
 
+	/**
+	 * A method that sends an application to open a joint account.
+	 */
 	@SuppressWarnings("resource")
 	public void joint() {
 		Account account = new Account();

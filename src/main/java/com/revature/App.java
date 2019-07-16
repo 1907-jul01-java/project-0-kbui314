@@ -2,7 +2,9 @@ package com.revature;
 
 
 /**
- * Hello world! 
+ * 
+ * This is a application that simulates real-world behaviors of 
+ * a bank system. 
  *
  */
 public class App {

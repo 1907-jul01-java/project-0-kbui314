@@ -65,6 +65,9 @@ public class AdminMenu {
 		}
 	}
 	
+	/**
+	 * Shows the Administrator Menu.
+	 */
 	public void adminMenu() {
 		System.out.println();
 		System.out.println("ADMINISTRATOR MENU");
@@ -73,6 +76,9 @@ public class AdminMenu {
 				+ "Joint Applications\n6. View Customer's Account Information\n7. Delete Account\n8. Log Out");
 	}
 	
+	/**
+	 * A method that deposits in to any accounts.
+	 */
 	public void deposit() {
 			Account account = new Account();
 			List<Account> accounts = new ArrayList<>();
@@ -128,6 +134,9 @@ public class AdminMenu {
 		display();
 	}
 	
+	/**
+	 * A method that withdraws from any account.
+	 */
 	public void withdraw() {
 		Account account = new Account();
 		List<Account> accounts = new ArrayList<>();
@@ -187,6 +196,9 @@ public class AdminMenu {
 	display();
 	}
 	
+	/**
+	 * A method that transfers money from any account.
+	 */
 	public void transfer() {
 		Account account = new Account();
 		List<Account> accounts = new ArrayList<>();
@@ -264,13 +276,22 @@ public class AdminMenu {
 		display();
 	}
 	
+	/**
+	 * A method that displays all open account applications and
+	 * the employee can either accept/deny applications.
+	 */
 	public void reviewApplications() {
 		try {
 			UserDao userDao = new UserDao(connection);
 			PreparedStatement pStatement = connection.prepareStatement("Select username from application");
 			ResultSet resultSet = pStatement.executeQuery();
+			int numApplication = 0;
 			while(resultSet.next()) {
 				System.out.println(resultSet.getString("username"));
+			}
+			if(numApplication == 0) {
+				System.out.println("You have no open account application.");
+				display();
 			}
 			resultSet = pStatement.executeQuery();
 			Scanner in = new Scanner(System.in);
@@ -309,6 +330,10 @@ public class AdminMenu {
 		display();
 	}
 	
+	/**
+	 * A method that displays all open joint account applications and
+	 * the employee can either accept/deny applications.
+	 */
 	public void reviewJointApplications() {
 		UserDao userDao = new UserDao(connection);
 		ResultSet resultSet = userDao.getJointApplications();
@@ -369,12 +394,18 @@ public class AdminMenu {
 		display();
 	}
 	
+	/**
+	 * A method that displays all account information. 
+	 */
 	public void displayAccountInformation() {
 		UserDao userDao = new UserDao(connection);
 		userDao.getAllAccounts();
 		display();
 	}
 	
+	/**
+	 * Deletes account number based on the user's input.
+	 */
 	public void deleteAccount() {
 		UserDao userDao = new UserDao(connection);
 		System.out.println("Enter account number to delete.");

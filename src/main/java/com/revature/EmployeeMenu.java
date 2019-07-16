@@ -48,6 +48,9 @@ public class EmployeeMenu {
 		}
 	}
 	
+	/**
+	 * Shows Employee Menu
+	 */
 	public void employeeDisplay() {
 		System.out.println();
 		System.out.println("EMPLOYEE MENU");
@@ -55,18 +58,32 @@ public class EmployeeMenu {
 		System.out.println("1. View Customer's Account Information\n2. View Applications\n3. View Joint Applications\n4. Log Out");
 	}
 	
+	/**
+	 * A method that displays all account information. 
+	 */
 	public void displayAccountInformation() {
 		UserDao userDao = new UserDao(connection);
 		userDao.getAllAccounts();
 		display();
 	}
+	
+	/**
+	 * A method that displays all open account applications and
+	 * the employee can either accept/deny applications.
+	 */
 	public void reviewApplications() {
 		try {
 			UserDao userDao = new UserDao(connection);
 			PreparedStatement pStatement = connection.prepareStatement("Select username from application");
 			ResultSet resultSet = pStatement.executeQuery();
+			int numApplication = 0;
 			while(resultSet.next()) {
+				numApplication++;
 				System.out.println(resultSet.getString("username"));
+			}
+			if(numApplication == 0) {
+				System.out.println("You have no open account application.");
+				display();
 			}
 			resultSet = pStatement.executeQuery();
 			Scanner in = new Scanner(System.in);
@@ -105,6 +122,10 @@ public class EmployeeMenu {
 		display();
 	}
 	
+	/**
+	 * A method that displays all open joint account applications and
+	 * the employee can either accept/deny applications.
+	 */
 	public void reviewJointApplications() {
 		UserDao userDao = new UserDao(connection);
 		ResultSet resultSet = userDao.getJointApplications();

@@ -6,6 +6,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
 
+/**
+ * 
+ * Shows the customer's main menu.
+ *
+ */
 public class MainMenu {
 	Connection connection;
 	public void display() {
@@ -39,6 +44,10 @@ public class MainMenu {
 			}
 		}
 	}
+	
+	/**
+	 * Shows the main menu.
+	 */
 	public void menu() {
 		System.out.println();
 		System.out.println("MAIN MENU");
@@ -50,6 +59,10 @@ public class MainMenu {
 		this.connection = connection;
 	}
 	
+	/**
+	 * A method that creates a new user base on the user's inputed user
+	 * and password.
+	 */
 	public void signUp() {
 		try {
 			@SuppressWarnings("resource")
@@ -59,17 +72,13 @@ public class MainMenu {
 			String username = in.nextLine();
 			System.out.println("Provide a password.");
 			String password = in.nextLine();
-			if(password.equals("")) {
-				System.out.println("Cannot have an empty password. Please try again.");
-				display();
-			}
 			boolean bool = hasUser(username, password);
-			
 			
 			UserDao userDao = new UserDao(connection);
 			
 			if(!bool) {
 				userDao.insert(new User(username,password,"customer"));
+				System.out.println("Sign up successful. You may now log in.");
 			}
 			
 		} catch (Exception e) {
@@ -78,6 +87,9 @@ public class MainMenu {
 		}
 	}
 	
+	/**
+	 * A method that logs into the customer's account.
+	 */
 	public void login() {
 		@SuppressWarnings("resource")
 		Scanner in = new Scanner(System.in);
@@ -98,10 +110,18 @@ public class MainMenu {
 		}
 	}
 	
+	/**
+	 * A method that checks if the specified username is taken. If it is taken,
+	 * then return true. If it is not taken, then return false.
+	 * @param username
+	 * @param password
+	 * @return
+	 */
 	public Boolean hasUser(String username, String password) {
 		
 		int i = 0;
 		char[] usernameCharacter = username.toCharArray();
+		char passwordCharacter = password.charAt(0);
 		boolean valid = true;
 		try {
 			if(username.isEmpty()) {
@@ -110,6 +130,9 @@ public class MainMenu {
 			}
 			else if(Character.isDigit(username.charAt(0))) {
 				System.out.println("Usernames cannot start with a digit. Please try again.");
+				return true;
+			} else if(passwordCharacter == ' ') {
+				System.out.println("Invalid start of a password. Please try again");
 				return true;
 			}
 			for(char c : usernameCharacter) {
@@ -121,7 +144,6 @@ public class MainMenu {
 					return true;
 				}
 			}
-			
 			PreparedStatement pStatement = connection.prepareStatement("Select username from users where username=?");
 			pStatement.setString(1, username);
 			ResultSet resultSet = pStatement.executeQuery();
@@ -143,6 +165,14 @@ public class MainMenu {
 		return false;
 	}
 	
+	/**
+	 * A method that checks if the user exist and if the provided password is the
+	 * same as the password associated with the username. If it is valid, then
+	 * return true.
+	 * @param username
+	 * @param password
+	 * @return
+	 */
 	public Boolean authenticateUser(String username, String password) {
 		int i = 0;
 		try {

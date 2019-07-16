@@ -9,8 +9,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * An object that uses DAO patterns create,read,insert, and delete
+ * from the bank database.
+ * @author kbui3
+ *
+ */
 public class UserDao implements Dao<User> {
 	Connection connection;
+	
+	
 	@Override
 	public void insert(User user) {
 		try {
@@ -62,6 +70,11 @@ public class UserDao implements Dao<User> {
 		this.connection = connection;
 	}
 	
+	/**
+	 * Inserts account users base on username and account number into accountusers.
+	 * @param username
+	 * @param accountNumber
+	 */
 	public void insertAccountUser(String username, int accountNumber) {
 		try {
 			PreparedStatement pStatement = connection.prepareStatement("insert into accountusers(username,accountnumber) "
@@ -74,6 +87,10 @@ public class UserDao implements Dao<User> {
 		}
 	}
 	
+	/**
+	 * Inserts account number into account.
+	 * @param accountNumber
+	 */
 	public void insertAccount(int accountNumber) {
 		try {
 			PreparedStatement pStatement = connection.prepareStatement("insert into account(number,balance) "
@@ -86,6 +103,11 @@ public class UserDao implements Dao<User> {
 		}
 	}
 	
+	/**
+	 * Update the balance of the passed account number.
+	 * @param accountNumber
+	 * @param balance
+	 */
 	public void updateBalance(int accountNumber, int balance) {
 		
 		try {
@@ -98,6 +120,11 @@ public class UserDao implements Dao<User> {
 		}
 	}
 	
+	/**
+	 * Returns a result set of a specified account.
+	 * @param accountNumber
+	 * @return resultset
+	 */
 	public ResultSet getAccount(int accountNumber) {
 		ResultSet resultSet = null;
 		try {
@@ -111,6 +138,10 @@ public class UserDao implements Dao<User> {
 		return resultSet;
 	}
 	
+	/**
+	 * Inserts account application to apply for an open account into application table.
+	 * @param username
+	 */
 	public void apply(String username) {
 		try {
 			PreparedStatement pStatement = connection.prepareStatement("insert into application(username) values(?)");
@@ -121,6 +152,12 @@ public class UserDao implements Dao<User> {
 		}
 	}
 	
+	/**
+	 * Inserts account application to apply for an open joint account into joint table.
+	 * @param username
+	 * @param account
+	 * @param addUser
+	 */
 	public void insertJointApplication(String username, int account, String addUser) {
 		try{
 			PreparedStatement pStatement = connection.prepareStatement("Insert into joint(username,account,adduser) values(?,?,?)");
@@ -133,6 +170,11 @@ public class UserDao implements Dao<User> {
 		}
 	}
 	
+	/**
+	 * Get the category of the specified user.
+	 * @param username
+	 * @return category
+	 */
 	public String getCategory(String username) {
 		String category = null;
 		try {
@@ -150,6 +192,9 @@ public class UserDao implements Dao<User> {
 		return category;
 	}
 	
+	/**
+	 * Get all the accounts.
+	 */
 	public void getAllAccounts() {
 		try {
 			PreparedStatement pStatement = connection.prepareStatement("Select users.username,accountusers.accountnumber,account.balance "
@@ -173,6 +218,10 @@ public class UserDao implements Dao<User> {
 		}
 	}
 	
+	/**
+	 * Deletes the account application. 
+	 * @param username
+	 */
 	public void deleteApplication(String username) {
 		try {
 			PreparedStatement pStatement = connection.prepareStatement("Delete from application where username=?");
@@ -183,6 +232,10 @@ public class UserDao implements Dao<User> {
 		}
 	}
 	
+	/**
+	 * Deletes the joint account application.
+	 * @param id
+	 */
 	public void deleteJointApplication(int id) {
 		try {
 			PreparedStatement pStatement = connection.prepareStatement("Delete from joint where id=?");
@@ -193,6 +246,11 @@ public class UserDao implements Dao<User> {
 		}
 	}
 	
+	/**
+	 * Gets the user from the user table.
+	 * @param username
+	 * @return
+	 */
 	public ResultSet getUser(String username) {
 		ResultSet resultSet = null;
 		try {
@@ -206,6 +264,10 @@ public class UserDao implements Dao<User> {
 		return resultSet;
 	}
 	
+	/**
+	 * Gets the specified joint account application.
+	 * @return resultset
+	 */
 	public ResultSet getJointApplications() {
 		ResultSet resultSet = null;
 		try {
@@ -217,6 +279,10 @@ public class UserDao implements Dao<User> {
 		return resultSet;
 	}
 	
+	/**
+	 * Deletes the specified account.
+	 * @param accountNumber
+	 */
 	public void deleteAccount(int accountNumber) {
 		try {
 			PreparedStatement pStatement = connection.prepareStatement("Delete from accountusers where accountusers.accountnumber=?");
