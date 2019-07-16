@@ -287,6 +287,7 @@ public class AdminMenu {
 			ResultSet resultSet = pStatement.executeQuery();
 			int numApplication = 0;
 			while(resultSet.next()) {
+				numApplication++;
 				System.out.println(resultSet.getString("username"));
 			}
 			if(numApplication == 0) {
@@ -314,7 +315,7 @@ public class AdminMenu {
 					}
 				}
 				if(count == 0) {
-					System.out.println("Username input doesn't exist. Please try again.");
+					System.out.println("Username input was invalid. Please try again.");
 				}
 			} else if(input.equals("n")) {
 				userDao.deleteApplication(username);
