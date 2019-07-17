@@ -1,4 +1,4 @@
-package com.revature;
+package entities;
 
 import java.util.List;
 

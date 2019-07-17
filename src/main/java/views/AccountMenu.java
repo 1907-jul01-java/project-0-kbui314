@@ -1,4 +1,4 @@
-package com.revature;
+package views;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,6 +8,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
+import entities.UserDao;
+import models.Account;
 
 public class AccountMenu {
 	private String userName;

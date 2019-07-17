@@ -1,4 +1,4 @@
-package com.revature;
+package models;
 
 public class Transaction {
 	private String userName;

@@ -1,4 +1,4 @@
-package com.revature;
+package entities;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,6 +8,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import models.Transaction;
+import models.User;
 
 /**
  * An object that uses DAO patterns create,read,insert, and delete

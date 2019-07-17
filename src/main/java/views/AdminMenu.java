@@ -1,4 +1,4 @@
-package com.revature;
+package views;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
+
+import entities.UserDao;
+import models.Account;
 
 public class AdminMenu {
 	private Connection connection;
